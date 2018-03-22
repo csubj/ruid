@@ -1,6 +1,10 @@
 language: csharp
+dist: trusty
 mono: none
 dotnet: 2.1.100
+
+install:
+- dotnet restore
 script:
- - dotnet restore .\Src\
- - dotnet test .\Src\RUID.Test\
+- dotnet build Src/
+- dotnet test Src/RUID.Test/RUID.Test.csproj
