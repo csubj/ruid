@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Runtime.Serialization;
 using System.Threading;
 
 /**
@@ -11,15 +13,13 @@ using System.Threading;
  */
 namespace Csubj
 {
-
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public class RUID : IComparable<RUID>
     {
         public static readonly int BINARY_SIZE = 18;
         private static readonly ThreadLocal<Random> RANDOM = new ThreadLocal<Random>(() => new Random(Guid.NewGuid().GetHashCode()));
 
-
-        private byte[] bytes { get; set; }
+        [JsonProperty] private byte[] bytes = new byte[BINARY_SIZE];
         private string encoded { get; set; }
 
         /**
@@ -38,7 +38,6 @@ namespace Csubj
 
             byte[] bytes = Convert.FromBase64String(encoded);
 
-            this.encoded = encoded;
             setBytes(bytes);
         }
 
@@ -67,13 +66,14 @@ namespace Csubj
 
         private void setBytes(byte[] bytes)
         {
-            if(bytes != null)
+            if(bytes == null)
                 throw new ArgumentNullException("Compact RUID cannot be null");
 
             if(bytes.Length != BINARY_SIZE)
                 throw new ArgumentException(String.Format("RUID must be %d bytes.", BINARY_SIZE));
 
             Array.Copy(bytes, this.bytes, BINARY_SIZE);
+            this.encoded =this.Encoded();
         }
 
         /**
@@ -83,7 +83,7 @@ namespace Csubj
         public byte[] Bytes()
         {
             byte[] tmp = new byte[BINARY_SIZE];
-            Array.Copy(bytes, tmp, BINARY_SIZE);
+            Array.Copy(this.bytes, tmp, BINARY_SIZE);
             return tmp;
         }
 
@@ -122,7 +122,15 @@ namespace Csubj
 
         public override int GetHashCode()
         {
-            return bytes.GetHashCode();
+            unchecked
+            {
+                int hash = 19;
+                foreach(var b in this.bytes)
+                {
+                    hash = hash * 31 + b.GetHashCode();
+                }
+                return hash;
+            }
         }
 
         public override String ToString()

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Csubj.Test
@@ -18,16 +19,17 @@ namespace Csubj.Test
 
             Assert.Equal(gen.GetHashCode(), new RUID(gen.Bytes()).GetHashCode());
 
-            //List<RUID> sorted = Stream.generate(RUID::generate)
-            //        .limit(30)
-            //        .sorted()
-            //        .collect(toList());
+            var sorted = new List<RUID>();
+            for(int i = 0;i < 30;i++)
+                sorted.Add(RUID.Generate());
 
-            //List<RUID> shuffled = new ArrayList<>(sorted);
-            //Collections.shuffle(shuffled);
-            //Collections.sort(shuffled);
+            sorted.Sort();
 
-            //assertEquals(sorted, shuffled);
+            List<RUID> shuffled = new List<RUID>(sorted);
+            shuffled = shuffled.OrderBy(a => Guid.NewGuid()).ToList();
+            shuffled.Sort();
+
+            Assert.Equal(sorted, shuffled);
         }
 
         [Fact]
@@ -36,10 +38,7 @@ namespace Csubj.Test
 
             RUID original = RUID.Generate();
             String json = JsonConvert.SerializeObject(original);
-            Console.WriteLine(json);
             RUID deserialized = JsonConvert.DeserializeObject<RUID>(json);
-		    Console.WriteLine(deserialized);
-
             Assert.Equal(original, deserialized);
     }
 }

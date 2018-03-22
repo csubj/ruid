@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUID", "RUID\RUID.csproj", "{ED8B04AE-FBD1-45AE-94AA-FA82838A1830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RUID.Test", "RUID.Test\RUID.Test.csproj", "{37A1E373-F32F-413D-BD10-704598E36D88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RUID.Test", "RUID.Test\RUID.Test.csproj", "{37A1E373-F32F-413D-BD10-704598E36D88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
