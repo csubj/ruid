@@ -4,7 +4,7 @@ mono: none
 dotnet: 2.1.100
 
 install:
-- dotnet restore
+- dotnet restore Src/
 script:
 - dotnet build Src/
 - dotnet test Src/RUID.Test/RUID.Test.csproj
