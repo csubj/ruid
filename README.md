@@ -1,5 +1,6 @@
 # ruid
-[![Build Status](https://travis-ci.org/csubj/ruid.svg?branch=master)](https://travis-ci.org/kag0/ruid)
+[![NuGet version (Newtonsoft.Json)](https://img.shields.io/nuget/v/RUID.svg?style=flat-square)](https://www.nuget.org/packages/RUID/)
+[![Build Status](https://travis-ci.org/csubj/ruid.svg?branch=master)](https://travis-ci.org/csubj/ruid)
 
 RUIDs are uniformly distributed, are 24 URI-safe ASCII characters when encoded,
 and are unique by 18 random bytes. They look like this: `9uZIuRrbPRl71PiRAmUID9xd`.
